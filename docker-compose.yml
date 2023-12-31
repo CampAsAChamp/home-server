@@ -102,8 +102,8 @@ services:
       - ${ROOT}/complete/movies:/movies # movies folder
       - ${ROOT}/downloads:/downloads # download folder
 
-  plex-server:
-    container_name: plex-server
+  plex:
+    container_name: plex
     image: plexinc/pms-docker:latest
     restart: unless-stopped
     environment:
