@@ -3,9 +3,9 @@ services:
   vpn:
     container_name: vpn
     image: dperson/openvpn-client:latest
+    restart: unless-stopped
     cap_add:
       - net_admin # required to modify network interfaces
-    restart: unless-stopped
     volumes:
       - /dev/net:/dev/net:z # tun device
       - ${ROOT}/config/vpn:/vpn # OpenVPN configuration
@@ -16,8 +16,9 @@ services:
     command: '-f "" -r 192.168.1.0/24' # enable firewall and route local network traffic
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
+    image: lscr.io/linuxserver/qbittorrent:latest
+    restart: unless-stopped
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
@@ -30,7 +31,6 @@ services:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
-    restart: unless-stopped
 
   deluge:
     container_name: deluge
@@ -106,9 +106,9 @@ services:
     container_name: plex
     image: plexinc/pms-docker:latest
     restart: unless-stopped
+    network_mode: host
     environment:
       - TZ=${TZ} # timezone, defined in .env
-    network_mode: host
     volumes:
       - ${ROOT}/config/plex/db:/config # plex database
       - ${ROOT}/config/plex/transcode:/transcode # temp transcoded files
