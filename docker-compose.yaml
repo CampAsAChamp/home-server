@@ -133,3 +133,15 @@ services:
       - /mnt/pool/TV:/tv
       - /mnt/pool/Movies:/movies
     restart: unless-stopped
+ 
+  portainer:
+    image: portainer/portainer-ce:latest
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+    container_name: portainer
+
+volumes:
+  portainer_data:
