@@ -1,63 +1,58 @@
-version: "3.8"
+# version: "3.8" -- Obsolete now
 services:
-  vpn:
-    container_name: vpn
-    image: dperson/openvpn-client:latest
-    restart: unless-stopped
+
+  # VPN
+  gluetun:
+    container_name: gluetun
+    image: qmcgaw/gluetun
     cap_add:
-      - net_admin # required to modify network interfaces
+      - NET_ADMIN
     volumes:
-      - /dev/net:/dev/net:z # tun device
-      - ${ROOT}/config/vpn:/vpn # OpenVPN configuration
+      - /mnt/pool/config/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=private internet access
+      - OPENVPN_USER=${PIA_USER}
+      - OPENVPN_PASSWORD=${PIA_PASSWORD}
+      - SERVER_REGIONS=US California,US Las Vegas,US Silicon Valley,US West
     ports:
-      - 8112:8112 # port for deluge web UI to be reachable from local network
-    security_opt:
-      - label:disable
-    command: '-f "" -r 192.168.1.0/24' # enable firewall and route local network traffic
+      - 8080:8080 # These are for qBittorrent
+      - 6881:6881
+      - 6881:6881/udp
+      - 8081:8081 # qBittorrent
+    restart: unless-stopped
 
   qbittorrent:
     container_name: qbittorrent
     image: lscr.io/linuxserver/qbittorrent:latest
-    restart: unless-stopped
+    # network_mode: host
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=8081
+    # ports:
+      # - 8081:8081
     volumes:
-      - /path/to/appdata/config:/config
-      - /path/to/downloads:/downloads
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
-
-  deluge:
-    container_name: deluge
-    image: linuxserver/deluge:latest
+      - /mnt/pool/config/qbittorrent:/config
+      - /mnt/pool/downloads:/downloads
     restart: unless-stopped
-    network_mode: service:vpn # run on the vpn network
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - ${ROOT}/downloads:/downloads # downloads folder
-      - ${ROOT}/config/deluge:/config # config files
 
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
     restart: unless-stopped
-    network_mode: host
+    # network_mode: host
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
-      - ${ROOT}/config/jackett:/config # config files
+      - /mnt/pool/config/jackett:/config
+      - /mnt/pool/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
+    ports:
+      - 9117:9117
 
   # nzbget:
   #   container_name: nzbget
@@ -75,56 +70,42 @@ services:
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr:latest
-    restart: unless-stopped
-    network_mode: host
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/config/sonarr:/config # config files
-      - ${ROOT}/complete/tv:/tv # tv shows folder
-      - ${ROOT}/downloads:/downloads # download folder
+      - /mnt/pool/config/sonarr:/config
+      - /mnt/pool/TV/:/tv
+      - /mnt/pool/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
 
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
-    restart: unless-stopped
-    network_mode: host
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/config/radarr:/config # config files
-      - ${ROOT}/complete/movies:/movies # movies folder
-      - ${ROOT}/downloads:/downloads # download folder
-
-
-  bazarr:
-    container_name: bazarr
-    image: linuxserver/bazarr
+      - /mnt/pool/config/radarr:/config
+      - /mnt/pool/Movies/:/movies
+      - /mnt/pool/downloads:/downloads
+    ports:
+      - 7878:7878
     restart: unless-stopped
-    network_mode: host
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-      - UMASK_SET=022 #optional
-    volumes:
-      - ${ROOT}/config/bazarr:/config # config files
-      - ${ROOT}/complete/movies:/movies # movies folder
-      - ${ROOT}/complete/tv:/tv # tv shows folder
 
   plex:
-    image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    network_mode: host
+    image: lscr.io/linuxserver/plex:latest
+    network_mode: host # Recommended, don't use default (bridge) mode
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Etc/UTC
       - VERSION=docker
       - PLEX_CLAIM= #optional
@@ -133,93 +114,41 @@ services:
       - /mnt/pool/TV:/tv
       - /mnt/pool/Movies:/movies
     restart: unless-stopped
- 
+
   portainer:
+    container_name: portainer
     image: portainer/portainer-ce:latest
     network_mode: host
+    ports:
+      - "9000:9000"
+      - "8004:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
     restart: unless-stopped
-    container_name: portainer
-
-  immich-server:
-    container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    command: ['start.sh', 'immich']
-    volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
-    ports:
-      - 2283:3001
-    depends_on:
-      - redis
-      - database
-    restart: always
-
-  immich-microservices:
-    container_name: immich_microservices
-    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    # extends: # uncomment this section for hardware acceleration - see https://immich.app/docs/features/hardware-transcoding
-    #   file: hwaccel.transcoding.yml
-    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
-    command: ['start.sh', 'microservices']
-    volumes:
-      - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - database
-    restart: always
-
-  immich-machine-learning:
-    container_name: immich_machine_learning
-    # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
-    # Example tag: ${IMMICH_VERSION:-release}-cuda
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
-    # extends: # uncomment this section for hardware acceleration - see https://immich.app/docs/features/ml-hardware-acceleration
-    #   file: hwaccel.ml.yml
-    #   service: cpu # set to one of [armnn, cuda, openvino, openvino-wsl] for accelerated inference - use the `-wsl` version for WSL2 where applicable
-    volumes:
-      - model-cache:/cache
-    env_file:
-      - .env
-    restart: always
-
-  redis:
-    container_name: immich_redis
-    image: registry.hub.docker.com/library/redis:6.2-alpine@sha256:51d6c56749a4243096327e3fb964a48ed92254357108449cb6e23999c37773c5
-    restart: always
-
-  database:
-    container_name: immich_postgres
-    image: registry.hub.docker.com/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
-    environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: always
 
   homer:
     image: b4bz/homer
-    #To build from source, comment previous line and uncomment below
-    #build: .
     container_name: homer
     volumes:
       - /mnt/pool/config/Homer/:/www/assets
-    network_mode: host
-    user: 1000:1000 # default
+    user: ${PUID}:${PUID} # default
     environment:
       - INIT_ASSETS=0 # default
+    ports:
+      - 8083:8080
+    restart: unless-stopped
+
+  filebrowser:
+    container_name: filebrowser
+    image: filebrowser/filebrowser:latest
+    volumes:
+      - /mnt/pool:/srv
+      - /mnt/pool/filebrowser.db:/database.db
+    user: "${PUID}:${PUID}"
+    ports:
+      - "8082:80"
+    restart: unless-stopped
 
 volumes:
   portainer_data:
-  pgdata:
-  model-cache:
-
