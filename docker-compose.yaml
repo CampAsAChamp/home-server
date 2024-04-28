@@ -166,5 +166,11 @@ services:
       # - "/dev/sdc" # Uncomment when parity drive is fixed
     restart: unless-stopped
 
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   portainer_data:
