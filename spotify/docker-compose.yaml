@@ -12,12 +12,12 @@ services:
     depends_on:
       - mongo
     environment:
-      - API_ENDPOINT=http://192.168.1.118:8085 # This MUST be included as a valid URL in the spotify dashboard (see below)
-      - CLIENT_ENDPOINT=http://192.168.1.118:3002
+      - API_ENDPOINT=http://${SERVER_IP}:8085 # This MUST be included as a valid URL in the spotify dashboard (see below)
+      - CLIENT_ENDPOINT=http://${SERVER_IP}:3002
       - SPOTIFY_PUBLIC=${SPOTIFY_PUBLIC}
       - SPOTIFY_SECRET=${SPOTIFY_SECRET}
-      - CORS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://192.168.1.118:3002
-  
+      - CORS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://${SERVER_IP}:3002
+
   mongo:
     container_name: mongo
     image: mongo:6
@@ -30,4 +30,4 @@ services:
     ports:
       - "3002:3000"
     environment:
-      API_ENDPOINT: http://192.168.1.118:8085
+      API_ENDPOINT: http://${SERVER_IP}:8085
