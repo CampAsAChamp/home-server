@@ -58,9 +58,9 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
     volumes:
-      - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/jackett:/config
       - /mnt/pool/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9117:9117
 
