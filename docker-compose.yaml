@@ -4,10 +4,9 @@ services:
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:latest
-    network_mode: host
     ports:
-      - "9000:9000"
-      - "8004:8000"
+      # - 8000:8000
+      - 9443:9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
