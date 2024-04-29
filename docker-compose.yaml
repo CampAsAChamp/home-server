@@ -13,6 +13,18 @@ services:
       - portainer_data:/data
     restart: unless-stopped
 
+  nginx_proxy_manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx_proxy_manager
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - /mnt/pool/config/nginx:/data
+      - /mnt/pool/config/ngnix/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+
   # VPN
   gluetun:
     container_name: gluetun
