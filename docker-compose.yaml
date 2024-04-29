@@ -26,7 +26,7 @@ services:
       - 443:443
     volumes:
       - /mnt/pool/config/nginx:/data
-      - /mnt/pool/config/ngnix/letsencrypt:/etc/letsencrypt
+      - /mnt/pool/config/nginx/letsencrypt:/etc/letsencrypt
     restart: unless-stopped
 
   # VPN
