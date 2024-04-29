@@ -42,6 +42,7 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - WEBUI_PORT=8081
+    # Comment this port section out because we're opening it for the Gluetun container which is the one that actually needs it
     # ports:
       # - 8081:8081
     volumes:
