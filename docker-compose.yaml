@@ -12,6 +12,12 @@ services:
       - portainer_data:/data
     restart: unless-stopped
 
+  portainer_password:
+    container_name: portainer_password
+    image: portainer/helper-reset-password
+    volumes:
+      - portainer_data:/data
+
   nginx_proxy_manager:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx_proxy_manager
@@ -54,7 +60,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - WEBUI_PORT=8081
     # Comment this port section out because we're opening it for the Gluetun container which is the one that actually needs it
-    # ports:
+    # ports: 
       # - 8081:8081
     volumes:
       - /mnt/pool/config/qbittorrent:/config
