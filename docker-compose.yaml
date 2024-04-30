@@ -162,7 +162,7 @@ services:
       - /mnt/pool/config/homer/:/www/assets
     user: ${PUID}:${PUID} # default
     environment:
-      - INIT_ASSETS=0 # default
+      - INIT_ASSETS=0
     ports:
       - 8083:8080
     restart: unless-stopped
