@@ -193,7 +193,7 @@ services:
     devices:
       - "/dev/sda"
       - "/dev/sdb"
-      # - "/dev/sdc" # Uncomment when parity drive is fixed
+      - "/dev/sdc" # Uncomment when parity drive is fixed
     restart: unless-stopped
 
   watchtower:
