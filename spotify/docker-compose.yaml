@@ -5,7 +5,6 @@ services:
   server:
     container_name: spotify_server
     image: yooooomi/your_spotify_server
-    restart: unless-stopped
     ports:
       - "8085:8080"
     links:
@@ -18,18 +17,20 @@ services:
       - SPOTIFY_PUBLIC=${SPOTIFY_PUBLIC}
       - SPOTIFY_SECRET=${SPOTIFY_SECRET}
       - CORS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://${SERVER_IP}:3002
+    restart: unless-stopped
 
   mongo:
     container_name: mongo
     image: mongo:6
     volumes:
       - /mnt/pool/config/your_spotify/your_spotify_db:/data/db
+    restart: unless-stopped
 
   web:
     container_name: spotify_client
     image: yooooomi/your_spotify_client
-    restart: unless-stopped
     ports:
       - "3002:3000"
     environment:
       API_ENDPOINT: http://${SERVER_IP}:8085
+    restart: unless-stopped
