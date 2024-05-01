@@ -27,6 +27,7 @@ services:
     volumes:
       - /mnt/pool/config/nginx:/data
       - /mnt/pool/config/nginx/letsencrypt:/etc/letsencrypt
+      - ./_hsts_map.conf:/app/templates/_hsts_map.conf
     restart: unless-stopped
 
   # VPN
