@@ -70,7 +70,6 @@ services:
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
-    restart: unless-stopped
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
@@ -81,6 +80,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 9117:9117
+    restart: unless-stopped
 
   prowlarr:
     container_name: prowlarr
@@ -146,7 +146,6 @@ services:
   tautulli:
     container_name: tautulli
     image: ghcr.io/tautulli/tautulli
-    restart: unless-stopped
     volumes:
       - /mnt/pool/config/tautulli:/config
     environment:
@@ -155,6 +154,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     ports:
       - 8181:8181
+    restart: unless-stopped
 
   homer:
     image: b4bz/homer
@@ -202,6 +202,7 @@ services:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
 
 volumes:
   portainer_data:
