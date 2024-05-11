@@ -104,7 +104,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/sonarr:/config
-      - /mnt/pool/TV/:/tv
+      - /mnt/pool/tv/:/tv
       - /mnt/pool/downloads:/downloads
     ports:
       - 8989:8989
@@ -120,7 +120,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/radarr:/config
-      - /mnt/pool/Movies/:/movies
+      - /mnt/pool/movies/:/movies
       - /mnt/pool/downloads:/downloads
     ports:
       - 7878:7878
@@ -138,8 +138,8 @@ services:
       - PLEX_CLAIM= #optional (if using the default (bridge) network mode)
     volumes:
       - /mnt/pool/config/plex:/config
-      - /mnt/pool/TV:/tv
-      - /mnt/pool/Movies:/movies
+      - /mnt/pool/tv:/tv
+      - /mnt/pool/movies:/movies
     restart: unless-stopped
 
   tautulli:
