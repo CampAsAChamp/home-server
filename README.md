@@ -16,7 +16,6 @@
 </div>
 
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -40,15 +39,12 @@
 </details>
 
 
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 ### Built With
@@ -56,7 +52,6 @@
 [![My Skills](https://skillicons.dev/icons?i=ubuntu,linux,docker,nginx,mongodb,postgres,redis,cloudflare)](https://skillicons.dev)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
