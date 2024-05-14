@@ -1,33 +1,17 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/CampAsAChamp/home-server">
-    <img src="assets/logo.png" alt="Logo" width="80" height="80">
+    <img src="imgs/server-512.webp" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Home Server</h3>
 
   <p align="center">
-    My Home Server for file storage, photo, movie and tv management and serving, with many other bells and whistles.
+    My Home Server for file storage, photo, movie, tv management & serving, with many other bells and whistles.
     <br />
-    <a href="https://github.com/CampAsAChamp/home-server"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/CampAsAChamp/home-server">View Demo</a>
-    ·
-    <a href="https://github.com/CampAsAChamp/home-server/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/CampAsAChamp/home-server/issues">Request Feature</a>
   </p>
 </div>
 
@@ -50,12 +34,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#service-links">Service Links</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -73,14 +53,7 @@
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+[![My Skills](https://skillicons.dev/icons?i=ubuntu,linux,docker,nginx,mongodb,postgres,redis,cloudflare)](https://skillicons.dev)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -95,78 +68,80 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
+- **Docker**
   ```sh
-  npm install npm@latest -g
+  # Add Docker's official GPG key:
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl gnupg
+  sudo install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+
+  # Install the Docker package
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   ```
+- **MergerFS & SnapRAID**
+  - https://thenomadcode.tech/mergerfs-snapraid-is-the-new-raid-5
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/CampAsAChamp/home-server.git
    ```
-3. Install NPM packages
+3. Start the main stack
    ```sh
-   npm install
+   cd docker
+   docker compose up -d
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Start the `Spotify` stack
+   ```sh
+   cd spotify
+   docker compose up -d
    ```
-
+    i. Set up your Spotify Developers application if you haven't already https://github.com/Yooooomi/your_spotify?tab=readme-ov-file#creating-the-spotify-application
+3. Start the `Immich` stack
+   ```sh
+   cd immich
+   docker compose up -d
+   ```
+4. **TODO**: Create a command to start all of them together
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+<!-- Service Links -->
+## Service Links
+1. [Portainer](https://192.168.1.118:9443/)
+1. [Homer](http://192.168.1.118:8083/)
+1. [Immich](http://192.168.1.118:2283/photos)
+1. [File Browser](http://192.168.1.118:8082/)
+1. [qBittorrent](http://192.168.1.118:8081/)
+1. [Plex](http://192.168.1.118:32400/web/index.html#!/)
+1. [Radarr (Movies)](http://192.168.1.118:7878/)
+1. [Sonarr (TV)](http://192.168.1.118:8989/)
+1. [Prowlarr](http://192.168.1.118:9696/)
+1. [Jackett](http://192.168.1.118:9117/)
+1. [Tautulli](http://192.168.1.118:8181/)
+1. [Scrutiny](http://192.168.1.118:8084/)
+1. [Your Spotify](http://192.168.1.118:3002/)
+1. [Nginx Proxy Manager](http://192.168.1.118:81/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/CampAsAChamp/home-server/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+- [ ] Wake On Lan support
+- [ ] Save login passwords to Bitwarden
+- [ ] Custom Nginx Proxy Manager theme
+- [ ] Experiment with [Traefik](https://traefik.io/traefik/) for Reverse Proxy with CORS
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
