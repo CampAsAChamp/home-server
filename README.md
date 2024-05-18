@@ -143,4 +143,4 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- MARKDOWN LINKS & ASSETS -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: assets/screenshot.png
+[product-screenshot]: imgs/screenshot.png
