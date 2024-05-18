@@ -1,5 +1,3 @@
-version: "3.8"
-
 #
 # WARNING: Make sure to use the docker-compose.yml of the current release:
 #
@@ -15,7 +13,7 @@ services:
     command: ["start.sh", "immich"]
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /mnt/pool/Photos/All_Photos/:/mnt/media/old_pics:ro
+      - /mnt/pool/photos/All_Photos/:/mnt/media/old_pics:ro
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
@@ -35,7 +33,7 @@ services:
     command: ["start.sh", "microservices"]
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /mnt/pool/Photos/All_Photos/:/mnt/media/old_pics:ro
+      - /mnt/pool/photos/All_Photos/:/mnt/media/old_pics:ro
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
