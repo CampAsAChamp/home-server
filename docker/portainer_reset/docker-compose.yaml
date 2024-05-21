@@ -1,0 +1,6 @@
+services:
+  portainer_password:
+    container_name: portainer_password
+    image: portainer/helper-reset-password
+    volumes:
+      - portainer_data:/data

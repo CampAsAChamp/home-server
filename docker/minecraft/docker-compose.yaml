@@ -1,0 +1,6 @@
+services:
+  minecraft_server:
+    container_name: minecraft_server
+    image: itzg/minecraft-server
+    ports:
+      - 25565:25565
