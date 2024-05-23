@@ -67,6 +67,8 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:jackett
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
     volumes:
       - /mnt/pool/config/jackett:/config
       - /mnt/pool/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
@@ -83,7 +85,8 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
-    volumes:
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
       - /mnt/pool/config/prowlarr:/config
     ports:
       - 9696:9696
@@ -116,6 +119,8 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/radarr:/config
@@ -151,6 +156,8 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
     ports:
       - 8181:8181
     restart: unless-stopped
