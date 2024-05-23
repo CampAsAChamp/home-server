@@ -97,6 +97,7 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
+      - TP_THEME=dracula
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/sonarr:/config
