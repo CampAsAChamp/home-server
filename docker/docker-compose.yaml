@@ -66,6 +66,7 @@ services:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:jackett
     volumes:
       - /mnt/pool/config/jackett:/config
       - /mnt/pool/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
@@ -81,6 +82,7 @@ services:
       - PUID=${PUID} # default user id, ~defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
     volumes:
       - /mnt/pool/config/prowlarr:/config
     ports:
@@ -94,6 +96,7 @@ services:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/sonarr:/config
@@ -110,6 +113,7 @@ services:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/radarr:/config
@@ -144,6 +148,7 @@ services:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
     ports:
       - 8181:8181
     restart: unless-stopped
