@@ -7,7 +7,6 @@ services:
       - EULA=true
       - MEMORY=2G
       - MOTD="Welcome to Nick's Minecraft Server! Yippie!!!"
-
     volumes:
       - /mnt/pool/config/minecraft/data:/data
     labels:
