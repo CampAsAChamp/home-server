@@ -16,9 +16,13 @@ services:
       - 80:80
       - 81:81
       - 443:443
+    environment:
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
     volumes:
       - /mnt/pool/config/nginx:/data
       - /mnt/pool/config/nginx/letsencrypt:/etc/letsencrypt
+      - /mnt/pool/config/nginx/98-themepark:/etc/cont-init.d/99-themepark
       - ./_hsts_map.conf:/app/templates/_hsts_map.conf
     restart: unless-stopped
 
@@ -51,6 +55,9 @@ services:
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
       - WEBUI_PORT=8081
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:vuetorrent
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
       # Comment this port section out because we're opening it for the Gluetun container which is the one that actually needs it
       # ports:
       # - 8081:8081
@@ -140,6 +147,9 @@ services:
       - TZ=${TZ}
       - VERSION=docker
       - PLEX_CLAIM= #optional (if using the default (bridge) network mode)
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:plex
+      - TP_COMMUNITY_THEME=true
+      - TP_THEME=onedark 
     volumes:
       - /mnt/pool/config/plex:/config
       - /mnt/pool/tv:/tv
