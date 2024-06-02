@@ -189,6 +189,7 @@ services:
     image: filebrowser/filebrowser:latest
     volumes:
       - /mnt/pool:/srv
+      - /home/nick/:/srv/home
       - /mnt/pool/filebrowser.db:/database.db
     user: "${PUID}:${PUID}"
     ports:
