@@ -6,7 +6,12 @@ services:
     environment:
       - EULA=true
       - MEMORY=2G
-      - MOTD="Welcome to Nick's Minecraft Server! Yippie!!!"
+      - VERSION=1.20.6
+      - MOTD="Welcome to §l§cNick's§r Minecraft Server! Yippie!!!"
+      - ICON=./server_icon.svg
+      - DIFFICULTY=hard
+      - EXISTING_OPS_FILE=SYNCHRONIZE
+      - OPS=CampAsAChamp,patzillaa
     volumes:
       - /mnt/pool/config/minecraft/data:/data
     labels:
