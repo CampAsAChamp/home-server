@@ -12,6 +12,8 @@ services:
       - DIFFICULTY=hard
       - EXISTING_OPS_FILE=SYNCHRONIZE
       - OPS=CampAsAChamp,patzillaa
+      - MOD_PLATFORM=MODRINTH
+      - MODRINTH_MODPACK=sop # Simply Optimized
     volumes:
       - /mnt/pool/config/minecraft/data:/data
     labels:
