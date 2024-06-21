@@ -5,7 +5,7 @@ services:
     network_mode: service:lazytainer
     environment:
       - EULA=true
-      - MEMORY=2G
+      - MEMORY=4G
       - VERSION=1.20.6
       - MOTD="Welcome to §l§cNick's§r Minecraft Server! Yippie!!!"
       - ICON=./server_icon.svg
