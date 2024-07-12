@@ -152,6 +152,7 @@ services:
       - TP_THEME=onedark 
     volumes:
       - /mnt/pool/config/plex:/config
+      - /mnt/pool/downloads/prowlarr:/prowlarr
       - /mnt/pool/tv:/tv
       - /mnt/pool/movies:/movies
     restart: unless-stopped
