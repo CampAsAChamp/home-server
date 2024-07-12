@@ -18,7 +18,7 @@ services:
       - 443:443
     environment:
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     volumes:
       - /mnt/pool/config/nginx:/data
       - /mnt/pool/config/nginx/letsencrypt:/etc/letsencrypt
@@ -57,7 +57,7 @@ services:
       - WEBUI_PORT=8081
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:vuetorrent
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
       # Comment this port section out because we're opening it for the Gluetun container which is the one that actually needs it
       # ports:
       # - 8081:8081
@@ -75,7 +75,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:jackett
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     volumes:
       - /mnt/pool/config/jackett:/config
       - /mnt/pool/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
@@ -93,7 +93,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
       - /mnt/pool/config/prowlarr:/config
     ports:
       - 9696:9696
@@ -108,7 +108,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/sonarr:/config
@@ -127,7 +127,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/pool/config/radarr:/config
@@ -149,7 +149,7 @@ services:
       - PLEX_CLAIM= #optional (if using the default (bridge) network mode)
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:plex
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     volumes:
       - /mnt/pool/config/plex:/config
       - /mnt/pool/downloads/prowlarr:/prowlarr
@@ -168,7 +168,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
       - TP_COMMUNITY_THEME=true
-      - TP_THEME=onedark 
+      - TP_THEME=onedark
     ports:
       - 8181:8181
     restart: unless-stopped
