@@ -6,7 +6,7 @@ services:
     environment:
       - EULA=true
       - MEMORY=4G
-      - VERSION=1.20.6
+      - VERSION=1.21
       - MOTD="Welcome to \u00A7bNick \u00A7r& \u00A7dPat's \u00A7rMinecraft Server! \u00A7cYippie!!!"
       - ICON=./server_icon.svg
       - DIFFICULTY=hard
